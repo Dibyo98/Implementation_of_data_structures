@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "array.h"
+#include "array.hpp"
 
 int main()
 {
-    mdd::array<int, 5> arr;
+    mdd::Array<int, 5> arr;
 
     for (int i = 0; i < arr.len(); i++)
     {

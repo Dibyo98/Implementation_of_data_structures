@@ -6,14 +6,14 @@
 namespace mdd
 {
     template <class T, std::size_t N>
-    class array
+    class Array
     {
     private:
         std::size_t size = N;
         T *pointer;
 
     public:
-        array()
+        Array()
         {
             if (size == 0)
                 pointer = NULL;
@@ -21,7 +21,7 @@ namespace mdd
                 pointer = new T[size];
         }
 
-        ~array()
+        ~Array()
         {
             delete[] pointer;
         }
