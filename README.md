@@ -1,2 +1,2 @@
-# Implementation_of_data_structures
-Implementation of various data structures
+# Implementation of Data Structures
+Implementation of various data structures in C++.
