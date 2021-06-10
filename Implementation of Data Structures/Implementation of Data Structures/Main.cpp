@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "array.hpp"
+#include "array.h"
 
 int main()
 {
