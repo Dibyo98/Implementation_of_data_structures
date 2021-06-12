@@ -1,80 +1,149 @@
 #pragma once
 
-#include <iostream>
-#include <stdexcept>
-
 namespace mdd {
 template <class _T, std::size_t _N>
 class Array {
-private:
-    _T _data[_N];
-
 public:
-    Array() { }
-    Array(const Array& arr);
-    ~Array() { }
+    void fill(const _T&);
+    void swap(Array&);
+    _T* begin();
+    const _T* begin() const;
+    _T* end();
+    const _T* end() const;
+    _T& front();
+    const _T& front() const;
+    _T& back();
+    const _T& back() const;
+    _T* data();
+    const _T* data() const;
+    _T& at(std::size_t);
+    const _T& at(std::size_t) const;
+    _T& operator[](std::size_t);
+    const _T& operator[](std::size_t) const;
+    constexpr std::size_t size() const;
+    constexpr std::size_t max_size() const;
+    constexpr bool empty() const;
 
-    Array& operator=(const Array& arr);
+private:
+    _T _data[_N ? _N : 1];
 };
 
 template <class _T, std::size_t _N>
-Array<_T, _N>::Array(const Array& arr)
+void Array<_T, _N>::fill(const _T& n_)
 {
-    std::copy(arr._data, arr._data + arr._N, _data);
+    std::fill(begin(), end(), n_);
 }
 
 template <class _T, std::size_t _N>
-Array<_T, _N>& Array<_T, _N>::operator=(const Array& arr)
+void Array<_T, _N>::swap(Array& other)
 {
-    std::copy(arr._data, arr._data + arr._N, _data);
-    return *this;
-}
 }
 
-/* namespace mdd_bak {
-template <class T, std::size_t N>
-class Array {
-private:
-    std::size_t size = N;
-    T* pointer;
+template <class _T, std::size_t _N>
+_T* Array<_T, _N>::begin()
+{
+    return _data;
+}
 
-public:
-    T* iterator;
+template <class _T, std::size_t _N>
+const _T* Array<_T, _N>::begin() const
+{
+    return (const _T*)_data;
+}
 
-public:
-    Array()
-    {
-        if (size == 0)
-            pointer = NULL;
-        else
-            pointer = new T[size];
-    }
+template <class _T, std::size_t _N>
+_T* Array<_T, _N>::end()
+{
+    return _data + _N;
+}
 
-    ~Array()
-    {
-        delete[] pointer;
-    }
+template <class _T, std::size_t _N>
+const _T* Array<_T, _N>::end() const
+{
+    return (const _T*)(_data + _N);
+}
 
-    T at(std::size_t i)
-    {
-        if (i < size)
-            return *(pointer + i);
-        else
-            throw std::out_of_range("Array out of bounds exception");
-    }
+template <class _T, std::size_t _N>
+_T& Array<_T, _N>::front()
+{
+    return _data[0];
+}
 
-    void put(std::size_t i, T data)
-    {
-        if (i < size) {
-            *(pointer + i) = data;
-        } else
-            throw std::out_of_range("Array out of bounds exception");
-    }
+template <class _T, std::size_t _N>
+const _T& Array<_T, _N>::front() const
+{
+    return (const _T&)_data[0];
+}
 
-    std::size_t len() { return size; }
+template <class _T, std::size_t _N>
+_T& Array<_T, _N>::back()
+{
+    return _data[_N - 1];
+}
 
-    T* begin() { return pointer; }
+template <class _T, std::size_t _N>
+const _T& Array<_T, _N>::back() const
+{
+    return (const _T&)_data[_N - 1];
+}
 
-    T* end() { return (pointer + N); }
-};
-} // namespace mdd */
+template <class _T, std::size_t _N>
+_T* Array<_T, _N>::data()
+{
+    return _data;
+}
+
+template <class _T, std::size_t _N>
+const _T* Array<_T, _N>::data() const
+{
+    return (const _T*)_data;
+}
+
+template <class _T, std::size_t _N>
+_T& Array<_T, _N>::at(std::size_t n_)
+{
+    if (n_ >= _N)
+        throw "Out of bounds";
+
+    return _data[n_];
+}
+
+template <class _T, std::size_t _N>
+const _T& Array<_T, _N>::at(std::size_t n_) const
+{
+    if (n_ >= _N)
+        throw "Out of bounds";
+
+    return (const _T&)_data[n_];
+}
+
+template <class _T, std::size_t _N>
+_T& Array<_T, _N>::operator[](std::size_t n_)
+{
+    return at(n_);
+}
+
+template <class _T, std::size_t _N>
+const _T& Array<_T, _N>::operator[](std::size_t n_) const
+{
+    return at(n_);
+}
+
+template <class _T, std::size_t _N>
+constexpr std::size_t Array<_T, _N>::size() const
+{
+    return _N;
+}
+
+template <class _T, std::size_t _N>
+constexpr std::size_t Array<_T, _N>::max_size() const
+{
+    return _N;
+}
+
+template <class _T, std::size_t _N>
+constexpr bool Array<_T, _N>::empty() const
+{
+    return _N == 0;
+}
+} // namespace mdd

@@ -1,17 +1,27 @@
 #include <iostream>
 
-#include "array.h"
+#include "Array.h"
+
+void print_arr(const mdd::Array<int, 5>& arr)
+{
+    for (int i = 0; i < arr.size(); i++)
+        std::cout << arr[i] << " " << std::flush;
+
+    std::cout << std::endl;
+}
 
 int main()
 {
     mdd::Array<int, 5> arr;
 
-    for (int i = 0; i < arr.len(); i++)
-    {
-        arr.put(i, 10+i);
-    }
+    arr.fill(-2);
 
-    std::cout << arr.at(2) << std::endl;
+    print_arr(arr);
 
-    return 0;
+    for (int i = 0; i < arr.size(); i++)
+        arr[i] = 10 + i;
+
+    print_arr(arr);
+    
+	return 0;
 }
