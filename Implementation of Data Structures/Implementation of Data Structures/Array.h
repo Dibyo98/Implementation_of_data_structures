@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 namespace mdd {
 template <class _T, std::size_t _N>
 class Array {
@@ -35,8 +37,9 @@ void Array<_T, _N>::fill(const _T& n_)
 }
 
 template <class _T, std::size_t _N>
-void Array<_T, _N>::swap(Array& other)
+void Array<_T, _N>::swap(Array& _other)
 {
+    std::swap_ranges(begin(), end(), _other.back());
 }
 
 template <class _T, std::size_t _N>
