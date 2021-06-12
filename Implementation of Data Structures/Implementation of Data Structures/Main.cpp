@@ -16,12 +16,24 @@ int main()
 
     arr.fill(-2);
 
-    print_arr(arr);
+    mdd::Array<int, 5> arr2 = arr;
+    mdd::Array<int, 5> arr3;
 
-    for (int i = 0; i < arr.size(); i++)
+    arr3 = arr;
+
+    print_arr(arr);
+    print_arr(arr2);
+    print_arr(arr3);
+
+    for (int i = 0; i < arr.size(); i++) {
         arr[i] = 10 + i;
+        arr2[i] = 20 + i;
+        arr3[i] = 30 + i;
+    }
 
     print_arr(arr);
+    print_arr(arr2);
+    print_arr(arr3);
     
 	return 0;
 }
