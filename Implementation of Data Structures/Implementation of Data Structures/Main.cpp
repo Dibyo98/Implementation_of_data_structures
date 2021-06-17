@@ -13,17 +13,19 @@ void print_arr(const mdd::Array<int, 5>& arr)
 int main()
 {
     mdd::Array<int, 5> arr;
+    mdd::Array<int, 5> arrt = { 1, 2, 3, 4, 5 };
 
     arr.fill(-2);
 
     mdd::Array<int, 5> arr2 = arr;
     mdd::Array<int, 5> arr3;
 
-    arr3 = arr;
+    arr3 = arrt;
 
     print_arr(arr);
     print_arr(arr2);
     print_arr(arr3);
+    print_arr(arrt);
 
     for (int i = 0; i < arr.size(); i++) {
         arr[i] = 10 + i;
@@ -34,6 +36,7 @@ int main()
     print_arr(arr);
     print_arr(arr2);
     print_arr(arr3);
+    print_arr(arrt);
     
 	return 0;
 }

@@ -1,11 +1,19 @@
 #pragma once
 
-#include <algorithm>
+#include <initializer_list>
+#include<algorithm>
 
 namespace mdd {
 template <class _T, std::size_t _N>
 class Array {
 public:
+    Array();
+    Array(const Array&);
+    Array(Array&&);
+    Array(const std::initializer_list<_T>&);
+    ~Array() = default;
+    Array& operator=(const Array&);
+    Array& operator=(Array&&);
     void fill(const _T&);
     void swap(Array&);
     _T* begin();
@@ -27,8 +35,46 @@ public:
     constexpr bool empty() const;
 
 private:
-    _T _data[_N ? _N : 1];
+    _T _m_data[_N ? _N : 1];
 };
+
+template <class _T, std::size_t _N>
+Array<_T, _N>::Array() {};
+
+template <class _T, std::size_t _N>
+Array<_T, _N>::Array(const Array& other)
+{
+    std::copy(other.begin(), other.end(), this->begin());
+}
+
+template <class _T, std::size_t _N>
+Array<_T, _N>::Array(Array&& other)
+    : _m_data { std::move(other) }
+{
+}
+
+template <class _T, std::size_t _N>
+Array<_T, _N>::Array(const std::initializer_list<_T>& values)
+{
+    int count = 0;
+    for (auto& element : values) {
+        _m_data[count++] = element;
+    }
+}
+
+template <class _T, std::size_t _N>
+Array<_T, _N>& Array<_T, _N>::operator=(const Array& other)
+{
+    std::copy(other.begin(), other.end(), this->begin());
+    return *this;
+}
+
+template <class _T, std::size_t _N>
+Array<_T, _N>& Array<_T, _N>::operator=(Array&& other)
+{
+    _m_data = std::move(other);
+    return *this;
+}
 
 template <class _T, std::size_t _N>
 void Array<_T, _N>::fill(const _T& n_)
@@ -45,79 +91,73 @@ void Array<_T, _N>::swap(Array& _other)
 template <class _T, std::size_t _N>
 _T* Array<_T, _N>::begin()
 {
-    return _data;
+    return _m_data;
 }
 
 template <class _T, std::size_t _N>
 const _T* Array<_T, _N>::begin() const
 {
-    return (const _T*)_data;
+    return (const _T*)_m_data;
 }
 
 template <class _T, std::size_t _N>
 _T* Array<_T, _N>::end()
 {
-    return _data + _N;
+    return _m_data + _N;
 }
 
 template <class _T, std::size_t _N>
 const _T* Array<_T, _N>::end() const
 {
-    return (const _T*)(_data + _N);
+    return (const _T*)(_m_data + _N);
 }
 
 template <class _T, std::size_t _N>
 _T& Array<_T, _N>::front()
 {
-    return _data[0];
+    return _m_data[0];
 }
 
 template <class _T, std::size_t _N>
 const _T& Array<_T, _N>::front() const
 {
-    return (const _T&)_data[0];
+    return (const _T&)_m_data[0];
 }
 
 template <class _T, std::size_t _N>
 _T& Array<_T, _N>::back()
 {
-    return _data[_N - 1];
+    return _m_data[_N - 1];
 }
 
 template <class _T, std::size_t _N>
 const _T& Array<_T, _N>::back() const
 {
-    return (const _T&)_data[_N - 1];
+    return (const _T&)_m_data[_N - 1];
 }
 
 template <class _T, std::size_t _N>
 _T* Array<_T, _N>::data()
 {
-    return _data;
+    return _m_data;
 }
 
 template <class _T, std::size_t _N>
 const _T* Array<_T, _N>::data() const
 {
-    return (const _T*)_data;
+    return (const _T*)_m_data;
 }
 
 template <class _T, std::size_t _N>
 _T& Array<_T, _N>::at(std::size_t n_)
 {
-    if (n_ >= _N)
-        throw "Out of bounds";
-
-    return _data[n_];
+    return _m_data[n_];
 }
 
 template <class _T, std::size_t _N>
 const _T& Array<_T, _N>::at(std::size_t n_) const
 {
-    if (n_ >= _N)
-        throw "Out of bounds";
-
-    return (const _T&)_data[n_];
+    return (const _T&)_m_data[n_];
 }
 
 template <class _T, std::size_t _N>
